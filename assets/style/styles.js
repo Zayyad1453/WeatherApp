@@ -32,6 +32,28 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
     },
+    viewShadow: {
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 3,
+            height: 3,
+        },
+        shadowOpacity: 3,
+        shadowRadius: 0,
+        elevation: 20,
+        zIndex: 99,
+    },
+    textShadow: {
+        textShadowColor: '#000',
+        textShadowOffset: {
+            width: 3,
+            height: 3,
+        },
+        shadowOpacity: 3,
+        shadowRadius: 0,
+        elevation: 20,
+        zIndex: 99,
+    },
     container: {
         padding: 30,
         flex: 1,
@@ -40,13 +62,13 @@ const styles = StyleSheet.create({
         // backgroundColor: 'rgba(199, 254, 255,0.5)',//new cool blue
         // backgroundColor: 'rgba(47, 81, 130,0.5)',//new dark blue
         // backgroundColor: 'rgba(162, 186, 186,0.5)',//new grey blue
-        
+
     },
     dateAddContainer: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between', 
+        justifyContent: 'space-between',
     },
     testBg: {
         backgroundColor: '#FFF',
@@ -58,45 +80,61 @@ const styles = StyleSheet.create({
     },
     weatherContainer: {
         flex: 3,
-        alignItems: 'flex-start',
+        // alignItems: 'flex-start',
         borderTopWidth: 10,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        paddingVertical: 10,
+    },
+    weatherMain: {
+        flex: 1,
+        flexGrow: 1,
+    },
+    weatherInfoBar: {
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        // flex: 1,
+        alignSelf: 'stretch',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        // alignItems: 'center',        
+        padding: 10,
+        borderRadius: 4,
+        // alignContent: 'space-between',
     },
     tempText: {
         color: '#fff'
     },
     bodyContainer: {
-        flex: 1,
-        alignItems: 'flex-end',
+        // flex: 1,
+        // alignItems: '',
     },
     weatherCardContainer: {
         // flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        // flexDirection: 'row',
+        // justifyContent: 'space-evenly',
+        alignSelf: 'stretch',
+        overflow: 'hidden',
+        marginRight: 30,
+        marginLeft: -30,
     },
     weatherCard: {
-        flex: 1,
+        // flex: 1,
+        // flexGrow: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        // width: 60,
-        margin: 5,
+        height: 110,
+        margin: 2,
         backgroundColor: 'rgba(0,0,0,0.5)',
-    
-        borderRadius: 4,
-        borderWidth: 1,
-        padding: 10,
 
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 4,
-            height: 0,
-        },
-        shadowOpacity: 0.9,
-        shadowRadius: 4.00,
-
-        elevation: 24,
+        borderRadius: 3,
+        // borderWidth: 1,
+        paddingHorizontal: 5,
+        paddingVertical: 10,
     },
     selectedCard: {
-        borderColor: '#FF0000',
+        // borderColor: 'rgba(255,223,0,0.5)',
+        borderColor: '#000',
+        borderWidth: 2,
     },
     unselectedCard: {
         borderColor: '#FFF',

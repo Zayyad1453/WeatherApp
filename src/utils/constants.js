@@ -64,13 +64,12 @@ function buildArray(arr) {
 
     for (let i = 0; i < arr.length; i++) {
         arr[i].date = datesArray[i];
-        if (31 === 0) {
+        if (i === 31) {
             console.log(datesArray[i]);
             console.log(new Date());
             console.log(months[datesArray[i].getMonth()]);
             console.log(datesArray[i].getMonth());
         }
-
         arr[i].day = days[datesArray[i].getDay()];
         arr[i].month = months[datesArray[i].getMonth()];
         arr[i].weatherCondition = weatherConditions[Math.floor(Math.random() * weatherConditions.length)]

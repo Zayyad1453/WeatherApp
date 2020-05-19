@@ -29,11 +29,18 @@ const WeatherCard = (props) => {
     }
 
     // console.log (new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),new Date(props.item.date).setHours(0, 0, 0, 0) , new Date().setHours(0, 0, 0, 0));
-    let isToday =  props.item && new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
+    let isToday =  new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
+
+
+    let date = props.item.date.getDate().toString();
+    const dateText = props.item && isToday ? `Today` :  date.substr(-1) === '1' ? `${date}st` : date.substr(-1) === '2' ? `${date}nd` : date.substr(-1) === '3' ? `${date}rd` : `${date}th`;
+    // const dateText = new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) ? `Today` :  date.substr(-1) === '1' ? ` st` : date.substr(-1) === '2' ? ` nd` : date.substr(-1) === '3' ? ` rd` : ` th`;
+    // const dateText = false ? 'this' : true ? 'that' : 'those';
+    // const textObj = <Text>{dateText}</Text>
     return (
         <AnimatedTouchable
-            style={[transformStyle, isToday ? styles.selectedCard : styles.unselectedCard]}
-            delayPressIn={100} delayPressOut={5} delayLongPress={5}
+            style={transformStyle}
+            delayPressIn={100} delayPressOut={100} delayLongPress={100}
             onPressIn={() => {
                 // alert("");
                 animate();
@@ -42,21 +49,15 @@ const WeatherCard = (props) => {
                 props.action(props.item, props.index);
             }}
         >
-            <View 
-                style={styles.weatherCard}
+            <View
+                style={[styles.weatherCard, styles.viewShadow, isToday ? styles.selectedCard : styles.unselectedCard]}
             >
-                <Text style={[styles.subText, styles.center, styles.tempText]}>
+                {!!dateText && (<Text style={[styles.subText, styles.center, styles.tempText]}>
 
-                    {
-                       isToday ?
-                        'Today ':
-                            // props.item.day.substr(0, 3)
-                            `${props.item.date.getDate()} ${props.item.date.getMonth() + 1} `
-                    } 
+                    {dateText}
 
-                    {/* `${props.item.day.substr(0, 3)}, ${props.item.date.getDate()} ${props.item.month.substr(0, 3)}, ${props.item.date.getFullYear()} ` */}
-                </Text>
-                {/* <Text>{props.item.index}</Text>  */}
+                </Text>)}
+
                 <MaterialCommunityIcons style={styles.center} size={20} name={iconName ? iconName.icon : null} color={'#fff'} />
                 <Text style={[styles.subText, styles.textBold, styles.center, styles.tempText]}>{props.item.temperature}˚C</Text>
             </View>
