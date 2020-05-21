@@ -5,9 +5,8 @@ import snowy from '../../assets/bg/snowy.jpg';
 import windy from '../../assets/bg/windy.jpg';
 import foggy from '../../assets/bg/fog.jpg';
 import cloudy from '../../assets/bg/cloudy.jpeg';
-// import cloudyNight from '../../assets/bg/cloudyNight.jpg';
+import cloudyNight from '../../assets/bg/cloudyNight.jpg';
 import lightning from '../../assets/bg/lightning.jpg';
-import lightnings from '../..assets/bg/cloudyNight.jpg';
 
 
 
