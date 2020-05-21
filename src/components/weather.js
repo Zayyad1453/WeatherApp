@@ -3,7 +3,7 @@ import { View, Text, Animated, Easing } from 'react-native';
 import styles from '../../assets/style/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WeatherDeck from './weatherDeck';
-import * as CONSTANTS from '../utils/constants';
+import * as HELPERS from '../utils/helpers';
 
 
 
@@ -33,7 +33,7 @@ class Weather extends React.Component {
         const { units } = this.state;
 
         let fahrenheit = (props.selectedCard.temperature * 9 / 5) + 32;
-        let iconName = CONSTANTS.ICONS_REF.find(item => item.condition === props.selectedCard.weatherCondition);
+        let iconName = HELPERS.ICONS_REF.find(item => item.condition === props.selectedCard.weatherCondition);
 
         console.log(props.selectedCard);
 

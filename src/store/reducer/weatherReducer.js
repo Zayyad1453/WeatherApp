@@ -7,10 +7,9 @@ const INITIAL_STATE = {
 };
 
 const weatherReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type) {
-        
+    const { type, outcome, loading, data } = action;
+    switch (type) {
         case actionTypes.LOADING_WEATHER:
-            // console.log('here3');
             return {
                 ...state,
                 loading: true,
@@ -18,15 +17,11 @@ const weatherReducer = (state = INITIAL_STATE, action) => {
         case actionTypes.WEATHER_STATUS:
             return {
                 ...state,
-                weatherReport: action.payload.data,
-                loading: false,
+                weatherReport: data,
+                loading: loading,
             }
         default:
             return state
     }
 };
 export default weatherReducer;
-
-// export default combineReducers({
-//     weather: weatherReducer,
-// });

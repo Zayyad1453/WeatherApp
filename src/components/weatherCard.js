@@ -6,7 +6,7 @@ import * as CONSTANTS from '../utils/constants';
 
 const WeatherCard = (props) => {
     // console.log(props)
-    let iconName = CONSTANTS.ICONS_REF.find(item => item.condition === props.item.weatherCondition);
+    let iconName = HELPERS.ICONS_REF.find(item => item.condition === props.item.weatherCondition);
 
 
     let scaleValue = new Animated.Value(0); // declare an animated value

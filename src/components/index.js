@@ -19,15 +19,16 @@ class Index extends React.Component {
 
 
     componentDidMount() {
-
-        let selection = CONSTANTS.WEATHER_REPORT.find(item => new Date(item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
-        let bg = CONSTANTS.updateBg(selection.weatherCondition);
+        this.props.getWeather();
+        // let selection = HELPERS.WEATHER_REPORT.find(item => new Date(item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
+        let selection = this.props.weatherStatus.find(item => new Date(item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
+        let bg = HELPERS.IMAGES_REF[selection.icon].img;
         let image = bg.image
-        let tint = bg.tint;
+        // let tint = bg.tint;
         this.setState({
             selectedCard: selection,
             bg: image,
-            tint: tint,
+            // tint: tint,
             loading: false,
             fade: new Animated.Value(0.6),
         }, () => {
@@ -37,13 +38,15 @@ class Index extends React.Component {
 
     selectCard = (item) => {
         // console.log(bg);
-        let bg = CONSTANTS.updateBg(item.weatherCondition);
+        // let bg = HELPERS.updateBg(item.weatherCondition);
+        // let bg = HELPERS.updateBg(item.weatherCondition);
+        let bg = HELPERS.IMAGES_REF[selection.icon].img;
         let image = bg.image;
-        let tint = bg.tint;
+        // let tint = bg.tint;
         this.setState({
             selectedCard: item,
             bg: image,
-            tint: tint,
+            // tint: tint,
             fade: new Animated.Value(0.6),
         }, () => {
             this.fadeIn();
@@ -53,7 +56,7 @@ class Index extends React.Component {
 
     fadeIn = () => {
         Animated.timing(this.state.fade, {
-            toValue: 1,
+            toValue: 0.9,
             duration: 500,
             useNativeDriver: true,
         }).start();
@@ -61,7 +64,7 @@ class Index extends React.Component {
 
     render() {
         const { loadingWeather, weatherStatus } = this.props;
-        const { loading, selectedCard, bg, tint, fade } = this.state;
+        const { selectedCard, bg, tint, fade } = this.state;
         
         return (            
                 <Animated.View style={[styles.manager, { opacity: fade }]}>
@@ -70,8 +73,9 @@ class Index extends React.Component {
                             bg={tint}
                             selectCard={this.selectCard}
                             selectedCard={selectedCard}
-                            loading={loading}
-                            deck={CONSTANTS.WEATHER_REPORT}
+                            loading={loadingWeather}
+                            // deck={HELPERS.WEATHER_REPORT}
+                            deck={weatherStatus}
                         />
                     </ImageBackground>
                 </Animated.View >            
