@@ -3,6 +3,7 @@ import { View, Text, Animated, Easing, TouchableHighlight } from 'react-native';
 import styles from '../../assets/style/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WeatherDeck from './weatherDeck';
+import SearchCard from './searchCard';
 import * as HELPERS from '../utils/helpers';
 
 
@@ -69,9 +70,9 @@ class Weather extends React.Component {
             weatherCondition = ref.name;
         }
 
-        console.log('inWeatherJS',props.selectedCard, props.location);
+        console.log('inWeatherJS', props.selectedCard, props.location);
 
-        
+
         let isToday;
         let date;
         let dateText;
@@ -85,22 +86,18 @@ class Weather extends React.Component {
         return (
             <View style={[styles.container, { backgroundColor: props.bg }]}>
                 <View style={styles.dateAddContainer}>
+                    <SearchCard
+                        location={props.location}
+                        getWeather={props.getWeather}
+                    />
                     {props.loading ? <Text>Loading...</Text> :
-                        <Text style={[styles.textBold, styles.defaultText]}>
+                        <Text style={[styles.textBold, styles.defaultText,styles.marginSm, { flex: 1 }]}>
                             {/* {props.selectedCard && new Date(props.selectedCard.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) ? "Today" : `${props.selectedCard.day.substr(0, 3)}, ${props.selectedCard.date.getDate()} ${props.selectedCard.month.substr(0, 3)}, ${props.selectedCard.date.getFullYear()} `} */}
                             {!!isToday && dateText}
                             {!isToday && `${props.selectedCard.day.substr(0, 3)}, ${dateText} ${props.selectedCard.month.substr(0, 3)} ${props.selectedCard.year}`}
                         </Text>
                     }
-                    {props.loading ? <Text>Loading...</Text> :
-                        <Text style={[styles.textLight, styles.defaultText, styles.testBg, styles.viewShadow]}>
-                            {/* {props.selectedCard.city},&nbsp; */}
-                            {props.location},&nbsp;
-                        <Text style={styles.textBold}>
-                                {props.selectedCard.timezone}
-                            </Text>
-                        </Text>
-                    }
+
                 </View>
                 <View style={styles.weatherContainer}>
                     <View style={styles.weatherMain}>

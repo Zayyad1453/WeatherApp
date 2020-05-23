@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { ImageBackground, Animated, ActivityIndicator, Modal, Linking, Platform, View, Text, TouchableHighlight, AppState } from 'react-native';
+import { ImageBackground, Animated, ActivityIndicator, Modal, Linking, Platform, View, KeyboardAvoidingView, Dimensions, ScrollView, AppState } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from '../../assets/style/styles';
 import { connect } from 'react-redux';
 import * as actions from '../store/'
@@ -62,8 +63,6 @@ class Index extends React.Component {
                 this.props.getWeather(location)
             }
         }
-
-
     }
 
     toggleLocationError = (bool) => {
@@ -136,6 +135,16 @@ class Index extends React.Component {
         });
     }
 
+    selectLocation = (data) => {
+        let image = "";
+        this.setState({
+            bg: image,
+            fade: new Animated.Value(0.6),
+        }, () => {
+            this.fadeIn();
+            this.props.getWeather(data)
+        });
+    }
 
     fadeIn = () => {
         Animated.timing(this.state.fade, {
@@ -153,30 +162,48 @@ class Index extends React.Component {
         // console.log('reducer', loading, weatherReport, location)
 
         return (
+            // <KeyboardAwareScrollView
+            // enableOnAndroid={true}
+            //     style={[{ flex: 1 , height: Dimensions.get('window').height}]}
+            // >
+
+
+            // <KeyboardAvoidingView 
+            // behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 40}
+            // style={{ flex: 1 }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps='handled'>
             <Animated.View style={[styles.manager, { opacity: fade }]}>
-                {showLocationError ?
-                    <ErrorModal
-                        showLocationError={showLocationError}
-                        openSettings={this.openSettings}
-                    />
-                    :
-                    <ImageBackground source={bg} style={styles.imageBackground} >
-                        {
-                            loading ?
-                                <ActivityIndicator size="large" color="#000" /> :
-                                <Weather
-                                    selectCard={this.selectCard}
-                                    selectedCard={selectedCard}
-                                    loading={loading}
-                                    location={location}
-                                    // deck={HELPERS.WEATHER_REPORT}
-                                    deck={weatherReport}
-                                    iconsRef={iconsRef}
-                                />
-                        }
-                    </ImageBackground>
-                }
+             
+                    {showLocationError ?
+                        <ErrorModal
+                            showLocationError={showLocationError}
+                            openSettings={this.openSettings}
+                        />
+                        :
+                        <ImageBackground source={bg} style={styles.imageBackground} >
+                            {
+                                loading ?
+                                    <ActivityIndicator size="large" color="#000" /> :
+                                    <Weather
+                                        selectCard={this.selectCard}
+                                        selectedCard={selectedCard}
+                                        loading={loading}
+                                        location={location}
+                                        getWeather={this.selectLocation}
+                                        // deck={HELPERS.WEATHER_REPORT}
+                                        deck={weatherReport}
+                                        iconsRef={iconsRef}
+                                    />
+                            }
+                        </ImageBackground>
+                    }
+                
             </Animated.View >
+            </ScrollView>
+            // </KeyboardAvoidingView>
+            // </KeyboardAvoidingView>
         );
     }
 }

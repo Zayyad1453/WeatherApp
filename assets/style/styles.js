@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     manager: {
         flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
     },
     imageBackground: {
         flex: 1,
@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
     defaultText: {
         fontSize: 20,
         color: '#fff',
+    },
+    defaultTextBlack: {
+        fontSize: 20,
+        color: '#000',
     },
     paddingSm: {
         padding: 20,
@@ -50,17 +54,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 3,
         shadowRadius: 0,
         elevation: 20,
+        // backgroundColor: 'transparent',
         zIndex: 99,
     },
     textShadow: {
-        textShadowColor: '#000',
-        textShadowOffset: {
-            width: 3,
-            height: 3,
-        },
-        shadowOpacity: 3,
-        shadowRadius: 0,
-        elevation: 20,
+        textShadowColor: '#111',
+        textShadowOffset: { width: 1, height: 4 },
+        textShadowRadius: 1,
+        elevation: 2,
         zIndex: 99,
     },
     container: {
@@ -75,17 +76,17 @@ const styles = StyleSheet.create({
     },
     dateAddContainer: {
         flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        // alignSelf: 'flex-end',
+        flexDirection: 'column',
+        // alignItems: 'center',
+        // justifyContent: 'flex-start',
     },
     testBg: {
         backgroundColor: '#FFF',
-        color: '#000',
-        padding: 10,
-        transform: [
-            { skewY: '-10deg' },
-        ],
+        // padding: 10,
+        // transform: [
+        //     { skewY: '-10deg' },
+        // ],
     },
     weatherContainer: {
         flex: 3,
