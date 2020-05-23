@@ -4,9 +4,11 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     manager: {
         flex: 1,
+        justifyContent: 'center',
     },
     imageBackground: {
         flex: 1,
+        justifyContent: 'center',
     },
     subText: {
         fontSize: 15,
@@ -15,6 +17,12 @@ const styles = StyleSheet.create({
     defaultText: {
         fontSize: 20,
         color: '#fff',
+    },
+    paddingSm: {
+        padding: 20,
+    },
+    marginSm: {
+        marginTop: 20,
     },
     majorText: {
         fontSize: 48,
@@ -31,6 +39,7 @@ const styles = StyleSheet.create({
     center: {
         flexDirection: 'row',
         alignSelf: 'center',
+        textAlign: 'center',
     },
     viewShadow: {
         shadowColor: '#000',
@@ -100,6 +109,9 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 4,
         // alignContent: 'space-between',
+    },
+    weatherInfoBarItem: {
+        flexDirection: 'row',
     },
     tempText: {
         color: '#fff'

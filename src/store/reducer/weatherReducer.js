@@ -2,8 +2,9 @@ import { combineReducers } from 'redux';
 import * as actionTypes from '../action/actionTypes';
 
 const INITIAL_STATE = {
-    loading: false,
+    loading: true,
     weatherReport: [],
+    location: ''
 };
 
 const weatherReducer = (state = INITIAL_STATE, action) => {
@@ -12,13 +13,18 @@ const weatherReducer = (state = INITIAL_STATE, action) => {
         case actionTypes.LOADING_WEATHER:
             return {
                 ...state,
-                loading: true,
+                loading: loading,
             }
         case actionTypes.WEATHER_STATUS:
             return {
                 ...state,
                 weatherReport: data,
                 loading: loading,
+            }
+        case actionTypes.LOCATION_STATUS:
+            return {
+                ...state,
+                location: data,
             }
         default:
             return state

@@ -65,12 +65,12 @@ function buildArray(arr) {
 
     for (let i = 0; i < arr.length; i++) {
         arr[i].date = datesArray[i];
-        if (i === 31) {
-            console.log(datesArray[i]);
-            console.log(new Date());
-            console.log(months[datesArray[i].getMonth()]);
-            console.log(datesArray[i].getMonth());
-        }
+        // if (i === 31) {
+        //     console.log(datesArray[i]);
+        //     console.log(new Date());
+        //     console.log(months[datesArray[i].getMonth()]);
+        //     console.log(datesArray[i].getMonth());
+        // }
         arr[i].day = days[datesArray[i].getDay()];
         arr[i].month = months[datesArray[i].getMonth()];
         arr[i].weatherCondition = weatherConditions[Math.floor(Math.random() * weatherConditions.length)]
@@ -106,6 +106,37 @@ function buildImagesRef() {
         'thunderstorm': { img: lightningImg, name: 'Thunderstorm', icon: 'weather-lightning-rainy' },
         'tornado': { img: lightningImg, name: 'Tornado', icon: 'weather-hurricane' },
     };
+    return arr;
+}
+
+
+export function addDates(arr) {
+
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    for (let i = 0; i < arr.length; i++) {
+
+        let time = arr[i].time * 1000;
+        let date = new Date(time);
+        if (i === 31) {
+            console.log(datesArray[i]);
+            console.log(new Date());
+            console.log(months[datesArray[i].getMonth()]);
+            console.log(datesArray[i].getMonth());
+        }
+        arr[i].time = time;
+        arr[i].day = days[date.getDay()];
+        arr[i].date = date.getDate();
+        arr[i].month = months[date.getMonth()];
+        arr[i].year = date.getFullYear();
+
+        arr[i].temperatureHigh  = parseFloat(arr[i].temperatureHigh).toFixed(1);
+        arr[i].temperatureLow  = parseFloat(arr[i].temperatureLow).toFixed(1);
+        arr[i].windSpeed  = parseFloat(arr[i].windSpeed).toFixed(1);
+        arr[i].humidity  = parseFloat(arr[i].humidity).toFixed(1);
+        arr[i].visibility  = parseFloat(arr[i].visibility).toFixed(1);
+    }
     return arr;
 }
 
@@ -145,6 +176,7 @@ export const DATES = buildDates();
 export const WEATHER_REPORT = buildArray(mockArray);
 export const ICONS_REF = buildIconsRef();
 export const IMAGES_REF = buildImagesRef();
+// export const ADD_DATES = addDates(params);
 
 
 

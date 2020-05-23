@@ -6,7 +6,7 @@ import * as CONSTANTS from '../utils/constants';
 
 const WeatherCard = (props) => {
     // console.log(props)
-    let iconName = HELPERS.ICONS_REF.find(item => item.condition === props.item.weatherCondition);
+    let iconName = props.iconsRef[props.item.icon].icon;
 
 
     let scaleValue = new Animated.Value(0); // declare an animated value
@@ -32,7 +32,7 @@ const WeatherCard = (props) => {
     let isToday =  new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
 
 
-    let date = props.item.date.getDate().toString();
+    let date = props.item.date.toString();
     const dateText = props.item && isToday ? `Today` :  date.substr(-1) === '1' ? `${date}st` : date.substr(-1) === '2' ? `${date}nd` : date.substr(-1) === '3' ? `${date}rd` : `${date}th`;
     // const dateText = new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) ? `Today` :  date.substr(-1) === '1' ? ` st` : date.substr(-1) === '2' ? ` nd` : date.substr(-1) === '3' ? ` rd` : ` th`;
     // const dateText = false ? 'this' : true ? 'that' : 'those';
@@ -58,8 +58,8 @@ const WeatherCard = (props) => {
 
                 </Text>)}
 
-                <MaterialCommunityIcons style={styles.center} size={20} name={iconName ? iconName.icon : null} color={'#fff'} />
-                <Text style={[styles.subText, styles.textBold, styles.center, styles.tempText]}>{props.item.temperature}˚C</Text>
+                <MaterialCommunityIcons style={styles.center} size={20} name={iconName} color={'#fff'} />
+                <Text style={[styles.subText, styles.textBold, styles.center, styles.tempText]}>{props.item.temperatureHigh}˚C</Text>
             </View>
         </AnimatedTouchable>
     );

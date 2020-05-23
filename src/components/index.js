@@ -1,52 +1,135 @@
 
 import React from 'react';
-import { ImageBackground, Animated } from 'react-native';
+import { ImageBackground, Animated, ActivityIndicator, Modal, Linking, Platform, View, Text, TouchableHighlight, AppState } from 'react-native';
 import styles from '../../assets/style/styles';
 import { connect } from 'react-redux';
 import * as actions from '../store/'
 import Weather from './weather';
-import * as CONSTANTS from '../utils/constants';
+import * as IntentLauncher from 'expo-intent-launcher';
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location'
+import * as HELPERS from '../utils/helpers';
+import ErrorModal from '../components/errorModal';
 
 
 class Index extends React.Component {
     state = {
+        appState: AppState.currentState,
+        location: '',
+        // openSettings: true,
+        showLocationError: false,
         selectedCard: '',
-        loading: true,
         bg: '',
-        tint: '',
         fade: new Animated.Value(0.6),
+        weatherReport: '',
     }
 
 
     componentDidMount() {
-        this.props.getWeather();
-        // let selection = HELPERS.WEATHER_REPORT.find(item => new Date(item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
-        let selection = this.props.weatherStatus.find(item => new Date(item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
-        let bg = HELPERS.IMAGES_REF[selection.icon].img;
-        let image = bg.image
-        // let tint = bg.tint;
+        // this.props.getWeather();
+        // let selection = HELPERS.WEATHER_REPORT.find(item => new Date(item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));        
+        // if (AppState._eventHandlers.change.size === 0) {
+        AppState.addEventListener('change', this.handleAppStateChange)
+        // }
+        this.fetchLocation();
+
+    }
+
+    componentWillUnmount() {
+        console.log('unmounting');
+        AppState.removeEventListener('change', this.handleAppStateChange)
+    }
+
+    handleAppStateChange = (nextAppState) => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active' && this.state.openSettings) {
+            console.log('App has come to the foreground!');
+            this.fetchLocation();
+        }
+        this.setState({ appState: nextAppState });
+    }
+
+    fetchLocation = async () => {
+        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+        // console.log('before', status, this.state.showLocationError);
+        if (status !== 'granted' && !this.state.showLocationError) {
+            this.toggleLocationError(true);
+            // console.log('inside', status, this.state.showLocationError);
+            return;
+        } else {
+            const location = await Location.getCurrentPositionAsync();
+            // console.log('location',location);
+            if (location) {
+                this.props.getWeather(location)
+            }
+        }
+
+
+    }
+
+    toggleLocationError = (bool) => {
+        // alert('here2',this.state.showLocationError)
         this.setState({
-            selectedCard: selection,
-            bg: image,
-            // tint: tint,
-            loading: false,
-            fade: new Animated.Value(0.6),
+            showLocationError: bool,
         }, () => {
-            this.fadeIn();
+            // alert('here3', this.state.showLocationError)
+            return;
         })
     }
 
+    openSettings = async () => {
+        this.toggleLocationError(false);
+        if (Platform.OS === 'ios') {
+            Linking.openURL('app-settings:')
+        } else {
+            const intent = await IntentLauncher.startActivityAsync(
+                IntentLauncher.ACTION_LOCATION_SOURCE_SETTINGS
+            )
+        }
+        this.setState({
+            openSettings: true,
+        })
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if (props.weatherReport && (props.weatherReport !== state.weatherReport)) {
+            let bg;
+            let image;
+
+            let selection;
+            if (props.weatherReport.length === 3) {
+                // selection = props.weatherReport.find(item => new Date(item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
+                selection = props.weatherReport[0];
+                bg = HELPERS.IMAGES_REF[selection.icon];
+                image = bg.img;
+            }
+            return {
+                selectedCard: selection,
+                bg: image,
+                fade: new Animated.Value(1),
+                weatherReport: props.weatherReport,
+                iconsRef: HELPERS.IMAGES_REF,
+            };
+        }
+        return null;
+    }
+
+
+    static getDerivedStateFromError(error) {
+        // Update state so the next render will show the fallback UI.
+        return { hasError: true };
+    }
+
+    componentDidCatch(error, errorInfo) {
+        // You can also log the error to an error reporting service
+        console.log('indexerror', error, errorInfo);
+    }
+
     selectCard = (item) => {
-        // console.log(bg);
-        // let bg = HELPERS.updateBg(item.weatherCondition);
-        // let bg = HELPERS.updateBg(item.weatherCondition);
-        let bg = HELPERS.IMAGES_REF[selection.icon].img;
-        let image = bg.image;
-        // let tint = bg.tint;
+        let bg = HELPERS.IMAGES_REF[item.icon];
+        let image = bg.img;
         this.setState({
             selectedCard: item,
             bg: image,
-            // tint: tint,
             fade: new Animated.Value(0.6),
         }, () => {
             this.fadeIn();
@@ -63,31 +146,47 @@ class Index extends React.Component {
     };
 
     render() {
-        const { loadingWeather, weatherStatus } = this.props;
-        const { selectedCard, bg, tint, fade } = this.state;
-        
-        return (            
-                <Animated.View style={[styles.manager, { opacity: fade }]}>
+        const { loading, weatherReport, location } = this.props;
+        const { selectedCard, bg, fade, iconsRef, showLocationError } = this.state;
+
+
+        // console.log('reducer', loading, weatherReport, location)
+
+        return (
+            <Animated.View style={[styles.manager, { opacity: fade }]}>
+                {showLocationError ?
+                    <ErrorModal
+                        showLocationError={showLocationError}
+                        openSettings={this.openSettings}
+                    />
+                    :
                     <ImageBackground source={bg} style={styles.imageBackground} >
-                        <Weather
-                            bg={tint}
-                            selectCard={this.selectCard}
-                            selectedCard={selectedCard}
-                            loading={loadingWeather}
-                            // deck={HELPERS.WEATHER_REPORT}
-                            deck={weatherStatus}
-                        />
+                        {
+                            loading ?
+                                <ActivityIndicator size="large" color="#000" /> :
+                                <Weather
+                                    selectCard={this.selectCard}
+                                    selectedCard={selectedCard}
+                                    loading={loading}
+                                    location={location}
+                                    // deck={HELPERS.WEATHER_REPORT}
+                                    deck={weatherReport}
+                                    iconsRef={iconsRef}
+                                />
+                        }
                     </ImageBackground>
-                </Animated.View >            
+                }
+            </Animated.View >
         );
     }
 }
 
 
 const mapStateToProps = (weatherReducer) => {
-    const { loadingWeather, weatherStatus } = weatherReducer;
+    const { loading, weatherReport, location } = weatherReducer;
     return {
-        loadingWeather, weatherStatus,
+        loading, weatherReport,
+        location,
     }
 };
 

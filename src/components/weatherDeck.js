@@ -19,7 +19,7 @@ class WeatherDeck extends React.Component {
     }
 
     render() {
-        const { selectedCard, deck } = this.props;
+        const { selectedCard, deck, iconsRef } = this.props;
         // console.log('WEATHER_REPORT', CONTANTS.WEATHER_REPORT,)
         const windowWidth = Dimensions.get('window').width;
         // console.log(selectedCard.index);
@@ -38,7 +38,7 @@ class WeatherDeck extends React.Component {
                         // itemHeight={"60px"}
                         containerCustomStyle={styles.weatherCardContainer}
                         renderItem={({ item, index }) =>
-                            <WeatherCard action={this.scrollToCard} item={item} index={index} />
+                            <WeatherCard action={this.scrollToCard} item={item} index={index} iconsRef={iconsRef} />
                         }
                         firstItem={30}
                         initialNumToRender={deck.length}
