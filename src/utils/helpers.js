@@ -36,8 +36,8 @@ function buildIconsRef() {
 
 export function buildDates() {
     const today = new Date();
-    const priorDate = new Date(new Date().setDate(today.getDate() - 30));
-    const futureDate = new Date(new Date().setDate(today.getDate() + 30));
+    const priorDate = new Date(new Date().setDate(today.getDate() - 7));
+    const futureDate = new Date(new Date().setDate(today.getDate() + 7));
     const year = priorDate.getFullYear();
     const month = priorDate.getMonth();
     let day = priorDate.getDate();
@@ -47,6 +47,7 @@ export function buildDates() {
     while (dates[dates.length - 1] < futureDate) {
         dates.push(new Date(year, month, ++day));
     }
+    // console.log('dates',dates);
     return dates;
 }
 
@@ -64,6 +65,7 @@ function buildArray(arr) {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     for (let i = 0; i < arr.length; i++) {
+        console.log(datesArray[i]);
         arr[i].date = datesArray[i];
         // if (i === 31) {
         //     console.log(datesArray[i]);
@@ -120,10 +122,8 @@ export function addDates(arr) {
         let time = arr[i].time * 1000;
         let date = new Date(time);
         if (i === 31) {
-            console.log(datesArray[i]);
+            console.log(new Date(arr[i].time));
             console.log(new Date());
-            console.log(months[datesArray[i].getMonth()]);
-            console.log(datesArray[i].getMonth());
         }
         arr[i].time = time;
         arr[i].day = days[date.getDay()];
@@ -173,10 +173,10 @@ export function updateBg(wc) {
 }
 
 export const DATES = buildDates();
-export const WEATHER_REPORT = buildArray(mockArray);
+// export const WEATHER_REPORT = buildArray(mockArray);
 export const ICONS_REF = buildIconsRef();
 export const IMAGES_REF = buildImagesRef();
-// export const ADD_DATES = addDates(params);
+
 
 
 

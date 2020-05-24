@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "testproj",
-    "slug": "testproj",
+    "name": "WeatherApp",
+    "slug": "weatherapp",
     "platforms": [
       "ios",
       "android",
@@ -23,6 +23,11 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "com.Zee.WeatherApp",
+      "versionCode": 1
+    },
+    "description": ""
   }
 }

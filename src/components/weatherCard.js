@@ -29,7 +29,7 @@ const WeatherCard = (props) => {
     }
 
     // console.log (new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),new Date(props.item.date).setHours(0, 0, 0, 0) , new Date().setHours(0, 0, 0, 0));
-    let isToday =  new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
+    let isToday =  new Date(props.item.time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
 
 
     let date = props.item.date.toString();

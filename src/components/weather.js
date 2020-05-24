@@ -62,6 +62,7 @@ class Weather extends React.Component {
         let iconName;
         let weatherCondition;
         if (props.selectedCard) {
+            // console.log('here', props.selectedCard)
             fahrenheit = ((props.selectedCard.temperatureHigh * 9 / 5) + 32).toFixed(1);
             fahrenheitLow = ((props.selectedCard.temperatureLow * 9 / 5) + 32).toFixed(1);
             // let iconName = HELPERS.ICONS_REF.find(item => item.condition === props.selectedCard.weatherCondition);
@@ -70,7 +71,8 @@ class Weather extends React.Component {
             weatherCondition = ref.name;
         }
 
-        console.log('inWeatherJS', props.selectedCard, props.location);
+        // console.log('inWeatherJS', props.selectedCard);
+        // console.log('locding', props.loading);
 
 
         let isToday;
@@ -84,14 +86,14 @@ class Weather extends React.Component {
 
         // console.log('showMore', showMore);
         return (
-            <View style={[styles.container, { backgroundColor: props.bg }]}>
+            <View style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.25)' }]}>
                 <View style={styles.dateAddContainer}>
                     <SearchCard
                         location={props.location}
-                        getWeather={props.getWeather}
+                        selectLocation={props.selectLocation}
                     />
-                    {props.loading ? <Text>Loading...</Text> :
-                        <Text style={[styles.textBold, styles.defaultText,styles.marginSm, { flex: 1 }]}>
+                    {!props.loading &&
+                        <Text style={[styles.textBold, styles.defaultText, styles.marginSm, { flex: 1 }]}>
                             {/* {props.selectedCard && new Date(props.selectedCard.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) ? "Today" : `${props.selectedCard.day.substr(0, 3)}, ${props.selectedCard.date.getDate()} ${props.selectedCard.month.substr(0, 3)}, ${props.selectedCard.date.getFullYear()} `} */}
                             {!!isToday && dateText}
                             {!isToday && `${props.selectedCard.day.substr(0, 3)}, ${dateText} ${props.selectedCard.month.substr(0, 3)} ${props.selectedCard.year}`}
@@ -169,6 +171,7 @@ class Weather extends React.Component {
                         selectedCard={props.selectedCard}
                         deck={props.deck}
                         iconsRef={props.iconsRef}
+                        firstIndex={props.firstIndex}
                     />
                 </View>
             </View>

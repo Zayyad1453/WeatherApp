@@ -1,60 +1,81 @@
 import React from 'react';
-import { View, Text, Animated, Easing, TouchableHighlight } from 'react-native';
+import { View, Text, ScrollView, TouchableHighlight, TextInput, ActivityIndicator } from 'react-native';
 import styles from '../../assets/style/styles';
 import * as CONSTANTS from '../utils/constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GoogleAutoComplete } from 'react-native-google-autocomplete';
 
+const selectLocation = async (placeId, fetchDetails, fetchWeather) => {
+    console.log('WPROPS', fetchDetails, placeId)
+    const resp = await fetchDetails(placeId)
+    fetchWeather(resp)
+    console.log('resp', resp);
+}
 
-const SearchCard =(props)=> {
-    // render() {
-        // const { location, getWeather } = this.props;
-        return (
-            <View style={{flex:1}}>
-                <GooglePlacesAutocomplete
-                    // placeholder='Search'
-                    container={[styles.viewShadow, styles.testBg, {flex: 1}]}
-                    textInput={[styles.textLight, styles.defaultText, styles.testBg, styles.viewShadow]}
-                    placeholder={"Search Locations"}
-                    currentLocation={true}
-                    fetchDetails={true}
-                    // listViewDisplayed=
-                    onPress={(data, details = null) => {
-                        console.log(data)
-                        console.log(details)
-                        props.getWeather(details)
-                        // alert(data, details);
-                    }}
+const LocationItem = (props) => {
+    console.log('PROPS', props)
+    return (
+        <TouchableHighlight
+            onPress={() => {
+                selectLocation(props.place_id, props.fetchDetails, props.selectLocation)
+            }}
+            style={[styles.testBg, styles.paddingSm, styles.viewShadow, { backgroundColor: '#fff', zIndex: 8, elevation: 8 }]}
+        >
+            <Text>
+                {props.description}
+            </Text>
+        </TouchableHighlight>
+    )
+}
 
-                    getDefaultValue={
-                        () => props.location.toString()
-                    }
-                    
-                    requestUrl={
-                        {
-                            url: `${CONSTANTS.PROXY}https://maps.googleapis.com/maps/api`,
-                            useOnPlatform: 'web'
-                        }
-                    }
-                    query={{
-                        key: CONSTANTS.GOOGLE_PLACES_API_KEY,
-                        language: 'en',
-                        types: '(cities)'
-                    }}
-                    styles={{
-                        container: [{ flex: 1, flexDirection: 'row' }, styles.testBg,],
-                        textInputContainer: [styles.viewShadow, styles.testBg, { flex: 1 }],
-                        textInput: [styles.textLight, styles.defaultTextBlack, styles.testBg,{ width: 50, flex: 1 }],
-                        listView: [{ position: 'absolute', backgroundColor: '#FFF', zIndex: 9998, elevation: 9998, top: 50, alignSelf: 'stretch', backgroundColor: 'blue', left: 0, right: 0, }, styles.viewShadow],
-                        row: [styles.testBg, { zIndex: 9999, elevation: 9999,  backgroundColor: 'orange' }],
-                        separator: [{height: 0, width: 0}]
-                    }}
-                />
+const ClearButton = (props) => {
+    return (
+        <TouchableHighlight
+            onPress={props.clearSearch}>
+            <MaterialCommunityIcons size={30} name={'close-circle'} color={'#555'} />
+        </TouchableHighlight>
+    )
+}
 
-            </View>
-        );
-    // }
+const SearchCard = (props) => {
+    return (
+        <GoogleAutoComplete
+            apiKey={CONSTANTS.GOOGLE_PLACES_API_KEY}
+            debounce={500}
+            minLength={3}
+            queryTypes={"(cities)"}
+        >
+            {({ handleTextChange, locationResults, fetchDetails, isSearching, clearSearch, inputValue }) => (
+                <React.Fragment>
+                    <View>
+                        <TextInput
+                            style={[styles.paddingSm, styles.textLight, styles.defaultTextBlack, styles.testBg, styles.viewShadow]}
+                            placeholder='search locations'
+                            onChangeText={handleTextChange}
+                            defaultValue={props.location}
+                        />
+                        <View style={{ position: 'absolute', right: 5, top: 8, zIndex: 9000, elevation: 30 }} >
+                            {isSearching ? <ActivityIndicator size='large' color="#000" /> : <ClearButton clearSearch={clearSearch} />}
+                        </View>
+                    </View>
+
+                    <ScrollView
+                        style={{ zIndex: 3, position: 'absolute', left: 0, right: 0, top: 45 }}
+                    >
+                        {locationResults.map(item => (
+                            <LocationItem
+                                {...item}
+                                key={item.id}
+                                fetchDetails={fetchDetails}
+                                selectLocation={props.selectLocation}
+                            />
+                        ))}
+                    </ScrollView>
+                </React.Fragment>
+            )}
+        </GoogleAutoComplete>
+    );
 };
- 
+
 
 export default SearchCard;

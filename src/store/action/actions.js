@@ -30,29 +30,26 @@ const setLocation = (data) => {
 
 const weatherCall = (dates, currentState, latitude, longitude) => {
     return (dispatch) => {
-
-        // const cors = 'https://cors-anywhere.herokuapp.com/';
-        // const url = 'https://api.darksky.net/forecast/8b01861d3b06ab86ba285ef08d52c88d/45.5898,-122.5951,2020-05-01T00:00:00?exclude=currently,hourly,flags';
-
-        for (let i = 11; i <= 13; i++) {
-            // console.log('weatherCall', dates[0], currentState);
+        const limit = dates.length;
+        for (let i = 0; i < limit; i++) {
+            // console.log('weatherCall', i, dates.length, currentState);
             let queryDate = `${dates[i].getFullYear()}-${dates[i].getMonth() + 1 < 10 ? "0" + (dates[i].getMonth() + 1) : dates[i].getMonth() + 1}-${dates[i].getDate() < 10 ? "0" + dates[i].getDate() : dates[i].getDate()}`;
-
-            const url = `${CONSTANTS.DARKSKY_BASE_URL}/${CONSTANTS.DARKSKY_API_KEY}/${latitude},${longitude},${queryDate}T00:00:00?exclude=currently,hourly,flags&units=si`;
+            const url = `${CONSTANTS.DARKSKY_BASE_URL}/${CONSTANTS.DARKSKY_API_KEY}/${latitude},${longitude},${queryDate}T00:00:00?exclude=currently,minutely,hourly,flags,alerts&units=si`;
 
             if (Platform.OS !== 'android' && Platform.OS !== 'ios') {
                 url = CONSTANTS.PROXY + url
             }
 
-            console.log('url', url);
+            // console.log('url', url);
             axios.get(url)
                 .then(response => {
+                    // console.log('response', response.data.daily)
                     if (response.status === 200) {
                         const resp = cloneDeep(response.data.daily.data[0]);
-                        console.log('waiting for 3');
+                        // console.log('weatherCall', i, currentState.length, limit);
                         currentState.push(resp);
-                        if (currentState.length === 3) {
-                            console.log('currentState', currentState);
+                        if (currentState.length === limit) {
+                            // console.log('currentState', currentState);
                             currentState = HELPERS.addDates(currentState);
                             dispatch(setLocation(response.data.timezone));
                             dispatch(setWeatherStatus('success', false, currentState));
@@ -76,8 +73,6 @@ const weatherCall = (dates, currentState, latitude, longitude) => {
 export const getWeather = (data) => {
     return (dispatch, getState) => {
         dispatch(loadingWeatherReport(true));
-
-        // const url = HELPERS.HISTORY_URL + data + HELPERS.API_KEY;
         // let weatherState = [...getState().weatherReport];
         let weatherState = [];
         let latitude;
@@ -87,8 +82,7 @@ export const getWeather = (data) => {
             latitude = data.coords.latitude;
             longitude = data.coords.longitude;
         } else {
-            console.log("in search", data.geometry.location.lat,data.geometry.location.lng)
-            // weatherState = [];
+            // console.log("in search", data.geometry.location.lat,data.geometry.location.lng)
             latitude = data.geometry.location.lat;
             longitude = data.geometry.location.lng;
         }

@@ -23,6 +23,7 @@ class Index extends React.Component {
         bg: '',
         fade: new Animated.Value(0.6),
         weatherReport: '',
+        firstIndex: 0,
     }
 
 
@@ -43,7 +44,7 @@ class Index extends React.Component {
 
     handleAppStateChange = (nextAppState) => {
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active' && this.state.openSettings) {
-            console.log('App has come to the foreground!');
+            // console.log('App has come to the foreground!');
             this.fetchLocation();
         }
         this.setState({ appState: nextAppState });
@@ -95,9 +96,11 @@ class Index extends React.Component {
             let image;
 
             let selection;
-            if (props.weatherReport.length === 3) {
-                // selection = props.weatherReport.find(item => new Date(item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
-                selection = props.weatherReport[0];
+            let index;
+            if (props.weatherReport.length > 0) {
+                // console.log('data in report present')
+                selection = props.weatherReport.find(item => new Date(item.time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
+                index = props.weatherReport.findIndex(item => new Date(item.time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0));
                 bg = HELPERS.IMAGES_REF[selection.icon];
                 image = bg.img;
             }
@@ -107,6 +110,7 @@ class Index extends React.Component {
                 fade: new Animated.Value(1),
                 weatherReport: props.weatherReport,
                 iconsRef: HELPERS.IMAGES_REF,
+                firstIndex: index,
             };
         }
         return null;
@@ -136,9 +140,9 @@ class Index extends React.Component {
     }
 
     selectLocation = (data) => {
-        let image = "";
+        // let image = "";
         this.setState({
-            bg: image,
+            // bg: image,
             fade: new Animated.Value(0.6),
         }, () => {
             this.fadeIn();
@@ -156,26 +160,15 @@ class Index extends React.Component {
 
     render() {
         const { loading, weatherReport, location } = this.props;
-        const { selectedCard, bg, fade, iconsRef, showLocationError } = this.state;
-
-
+        const { selectedCard, firstIndex, bg, fade, iconsRef, showLocationError } = this.state;
         // console.log('reducer', loading, weatherReport, location)
-
         return (
-            // <KeyboardAwareScrollView
-            // enableOnAndroid={true}
-            //     style={[{ flex: 1 , height: Dimensions.get('window').height}]}
-            // >
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyboardShouldPersistTaps='handled'
+            >
+                <Animated.View style={[styles.manager, { opacity: fade }]}>
 
-
-            // <KeyboardAvoidingView 
-            // behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            // keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 40}
-            // style={{ flex: 1 }}>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}
-            keyboardShouldPersistTaps='handled'>
-            <Animated.View style={[styles.manager, { opacity: fade }]}>
-             
                     {showLocationError ?
                         <ErrorModal
                             showLocationError={showLocationError}
@@ -191,19 +184,18 @@ class Index extends React.Component {
                                         selectedCard={selectedCard}
                                         loading={loading}
                                         location={location}
-                                        getWeather={this.selectLocation}
+                                        selectLocation={this.selectLocation}
                                         // deck={HELPERS.WEATHER_REPORT}
                                         deck={weatherReport}
                                         iconsRef={iconsRef}
+                                        firstIndex={firstIndex}
                                     />
                             }
                         </ImageBackground>
                     }
-                
-            </Animated.View >
+
+                </Animated.View >
             </ScrollView>
-            // </KeyboardAvoidingView>
-            // </KeyboardAvoidingView>
         );
     }
 }

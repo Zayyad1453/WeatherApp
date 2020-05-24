@@ -19,7 +19,7 @@ class WeatherDeck extends React.Component {
     }
 
     render() {
-        const { selectedCard, deck, iconsRef } = this.props;
+        const { selectedCard, deck, iconsRef, firstIndex } = this.props;
         // console.log('WEATHER_REPORT', CONTANTS.WEATHER_REPORT,)
         const windowWidth = Dimensions.get('window').width;
         // console.log(selectedCard.index);
@@ -40,7 +40,7 @@ class WeatherDeck extends React.Component {
                         renderItem={({ item, index }) =>
                             <WeatherCard action={this.scrollToCard} item={item} index={index} iconsRef={iconsRef} />
                         }
-                        firstItem={30}
+                        firstItem={firstIndex}
                         initialNumToRender={deck.length}
                     />
                 }

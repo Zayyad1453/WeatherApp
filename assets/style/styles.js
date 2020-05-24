@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     manager: {
         flex: 1,
         // justifyContent: 'center',
+        zIndex: 1,
     },
     imageBackground: {
         flex: 1,
@@ -16,14 +17,14 @@ const styles = StyleSheet.create({
     },
     defaultText: {
         fontSize: 20,
-        color: '#fff',
+        color: '#ddd',
     },
     defaultTextBlack: {
         fontSize: 20,
         color: '#000',
     },
     paddingSm: {
-        padding: 20,
+        padding: 10,
     },
     marginSm: {
         marginTop: 20,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
         fontSize: 48,
     },
     megaText: {
-        fontSize: 100,
+        fontSize: 90,
     },
     textLight: {
         fontWeight: '300',
@@ -52,9 +53,8 @@ const styles = StyleSheet.create({
             height: 3,
         },
         shadowOpacity: 3,
-        shadowRadius: 0,
-        elevation: 20,
-        // backgroundColor: 'transparent',
+        shadowRadius: 1,
+        elevation: 2,
         zIndex: 99,
     },
     textShadow: {
@@ -67,30 +67,18 @@ const styles = StyleSheet.create({
     container: {
         padding: 30,
         flex: 1,
-        // backgroundColor: 'rgba(247,183,51,0.5)',//default
-        // backgroundColor: 'rgba(252, 198, 3,0.5)',//new orange
-        // backgroundColor: 'rgba(199, 254, 255,0.5)',//new cool blue
-        // backgroundColor: 'rgba(47, 81, 130,0.5)',//new dark blue
-        // backgroundColor: 'rgba(162, 186, 186,0.5)',//new grey blue
-
     },
     dateAddContainer: {
         flex: 1,
-        // alignSelf: 'flex-end',
         flexDirection: 'column',
-        // alignItems: 'center',
-        // justifyContent: 'flex-start',
+        zIndex: 3,
+        elevation: 3,
     },
     testBg: {
         backgroundColor: '#FFF',
-        // padding: 10,
-        // transform: [
-        //     { skewY: '-10deg' },
-        // ],
     },
     weatherContainer: {
         flex: 3,
-        // alignItems: 'flex-start',
         borderTopWidth: 10,
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -102,51 +90,40 @@ const styles = StyleSheet.create({
     },
     weatherInfoBar: {
         backgroundColor: 'rgba(0,0,0,0.5)',
-        // flex: 1,
         alignSelf: 'stretch',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        // alignItems: 'center',        
+        justifyContent: 'space-between',       
         padding: 10,
         borderRadius: 4,
-        // alignContent: 'space-between',
     },
     weatherInfoBarItem: {
         flexDirection: 'row',
     },
     tempText: {
-        color: '#fff'
+        color: '#ddd'
     },
     bodyContainer: {
         // flex: 1,
         // alignItems: '',
     },
     weatherCardContainer: {
-        // flex: 1,
-        // flexDirection: 'row',
-        // justifyContent: 'space-evenly',
         alignSelf: 'stretch',
         overflow: 'hidden',
         marginRight: 30,
         marginLeft: -30,
     },
     weatherCard: {
-        // flex: 1,
-        // flexGrow: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
         height: 110,
         margin: 2,
         backgroundColor: 'rgba(0,0,0,0.5)',
-
         borderRadius: 3,
-        // borderWidth: 1,
         paddingHorizontal: 5,
         paddingVertical: 10,
     },
-    selectedCard: {
-        // borderColor: 'rgba(255,223,0,0.5)',
-        borderColor: '#000',
+    selectedCard: {        
+        borderColor: '#fff',
         borderWidth: 2,
     },
     unselectedCard: {
