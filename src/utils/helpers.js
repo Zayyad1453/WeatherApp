@@ -47,7 +47,6 @@ export function buildDates() {
     while (dates[dates.length - 1] < futureDate) {
         dates.push(new Date(year, month, ++day));
     }
-    // console.log('dates',dates);
     return dates;
 }
 
@@ -137,6 +136,11 @@ export function addDates(arr) {
         arr[i].humidity  = parseFloat(arr[i].humidity).toFixed(1);
         arr[i].visibility  = parseFloat(arr[i].visibility).toFixed(1);
     }
+        arr.sort(function(a,b) {
+            let x = a.time;
+            let y = b.time;
+            return x < y ? -1 : x > y ? 1 : 0;
+        });
     return arr;
 }
 

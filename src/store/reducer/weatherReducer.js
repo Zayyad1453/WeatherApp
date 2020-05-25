@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import * as actionTypes from '../action/actionTypes';
 
 const INITIAL_STATE = {

@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    View, Text, FlatList, Dimensions, TouchableOpacity,
-    Animated, Easing
-} from 'react-native';
+import { View, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import WeatherCard from './weatherCard';
 import styles from '../../assets/style/styles';
@@ -10,21 +7,17 @@ import styles from '../../assets/style/styles';
 class WeatherDeck extends React.Component {
 
     scrollToCard = (item, index) => {
+        // console.log('index', index)
+        // console.log('currentIndex',this.flatList.currentIndex)
         this.flatList.snapToItem(index);
         this.props.selectCard(item);
-    }
-
-    getLayout = (index) => {
-        return { length: windowWidth / 5, offset: windowWidth / 5 * index, index }
     }
 
     render() {
         const { selectedCard, deck, iconsRef, firstIndex } = this.props;
         // console.log('WEATHER_REPORT', CONTANTS.WEATHER_REPORT,)
         const windowWidth = Dimensions.get('window').width;
-        // console.log(selectedCard.index);
-        let test;
-
+        console.log(selectedCard);
         return (
             <View>
                 {
@@ -35,11 +28,18 @@ class WeatherDeck extends React.Component {
                         sliderWidth={windowWidth}
                         enableSnap={true}
                         itemWidth={windowWidth / 4.7}
-                        // itemHeight={"60px"}
                         containerCustomStyle={styles.weatherCardContainer}
+                        // contentContainerCustomStyle={{ backgroundColor: 'green' }}
                         renderItem={({ item, index }) =>
-                            <WeatherCard action={this.scrollToCard} item={item} index={index} iconsRef={iconsRef} />
+                            <WeatherCard
+                                action={this.scrollToCard}
+                                item={item}
+                                index={index}
+                                iconsRef={iconsRef}
+                                selectedCard={selectedCard}
+                            />
                         }
+                        inactiveSlideScale={0.8}
                         firstItem={firstIndex}
                         initialNumToRender={deck.length}
                     />

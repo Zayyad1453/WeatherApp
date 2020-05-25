@@ -6,14 +6,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GoogleAutoComplete } from 'react-native-google-autocomplete';
 
 const selectLocation = async (placeId, fetchDetails, fetchWeather) => {
-    console.log('WPROPS', fetchDetails, placeId)
     const resp = await fetchDetails(placeId)
-    fetchWeather(resp)
-    console.log('resp', resp);
+    fetchWeather(resp);
 }
 
 const LocationItem = (props) => {
-    console.log('PROPS', props)
     return (
         <TouchableHighlight
             onPress={() => {
@@ -28,15 +25,26 @@ const LocationItem = (props) => {
     )
 }
 
+const SearchTextInput = React.forwardRef((props, ref) => (
+    <TextInput
+        ref={ref}
+        style={[styles.paddingSm, styles.textLight, styles.defaultTextBlack, styles.testBg, styles.viewShadow]}
+        placeholder='Search cities'
+        onChangeText={(e) => props.handleTextChange(e.replace(/_/g, ' '))}
+        defaultValue={props.location.replace(/_/g, ' ')}
+    />
+))
+
 const ClearButton = (props) => {
     return (
         <TouchableHighlight
-            onPress={props.clearSearch}>
-            <MaterialCommunityIcons size={30} name={'close-circle'} color={'#555'} />
+            onPress={(e) => { props.clearSearch(e); ref.current.clear() }}>
+            <MaterialCommunityIcons size={30} name={'close'} color={'#555'} />
         </TouchableHighlight>
     )
 }
 
+const ref = React.createRef();
 const SearchCard = (props) => {
     return (
         <GoogleAutoComplete
@@ -47,12 +55,12 @@ const SearchCard = (props) => {
         >
             {({ handleTextChange, locationResults, fetchDetails, isSearching, clearSearch, inputValue }) => (
                 <React.Fragment>
-                    <View>
-                        <TextInput
-                            style={[styles.paddingSm, styles.textLight, styles.defaultTextBlack, styles.testBg, styles.viewShadow]}
-                            placeholder='search locations'
-                            onChangeText={handleTextChange}
-                            defaultValue={props.location}
+                    <View style={[styles.viewShadow]}>
+                        <SearchTextInput
+                            ref={ref}
+                            handleTextChange={handleTextChange}
+                            location={props.location}
+                            inputValue={inputValue}
                         />
                         <View style={{ position: 'absolute', right: 5, top: 8, zIndex: 9000, elevation: 30 }} >
                             {isSearching ? <ActivityIndicator size='large' color="#000" /> : <ClearButton clearSearch={clearSearch} />}

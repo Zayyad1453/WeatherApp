@@ -3,17 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4bff89c7-f19c-4f3a-844e-44d334a3f780" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/style/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/style/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/searchCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/searchCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/weather.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/weather.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/weatherCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/weatherCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/weatherDeck.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/weatherDeck.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/action/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/action/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/helpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

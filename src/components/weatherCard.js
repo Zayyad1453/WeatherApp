@@ -30,7 +30,7 @@ const WeatherCard = (props) => {
 
     // console.log (new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),new Date(props.item.date).setHours(0, 0, 0, 0) , new Date().setHours(0, 0, 0, 0));
     let isToday =  new Date(props.item.time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
-
+    let isSelected = (props.selectedCard.time === props.item.time)
 
     let date = props.item.date.toString();
     const dateText = props.item && isToday ? `Today` :  date.substr(-1) === '1' ? `${date}st` : date.substr(-1) === '2' ? `${date}nd` : date.substr(-1) === '3' ? `${date}rd` : `${date}th`;
@@ -46,11 +46,11 @@ const WeatherCard = (props) => {
                 animate();
             }}
             onPressOut={() => {
-                props.action(props.item, props.index);
+                props.action(props.item, props.index); 
             }}
         >
             <View
-                style={[styles.weatherCard, styles.viewShadow, isToday ? styles.selectedCard : styles.unselectedCard]}
+                style={[styles.weatherCard, styles.viewShadow, isSelected ? styles.selectedCard : styles.unselectedCard, {opacity: 1}]}
             >
                 {!!dateText && (<Text style={[styles.subText, styles.center, styles.tempText]}>
 
