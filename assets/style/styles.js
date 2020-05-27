@@ -78,10 +78,10 @@ const styles = StyleSheet.create({
     },
     weatherContainer: {
         flex: 3,
-        borderTopWidth: 10,
+        // borderTopWidth: 3,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        paddingVertical: 10,
+        paddingVertical: 5,
     },
     weatherMain: {
         flex: 1,
@@ -127,8 +127,11 @@ const styles = StyleSheet.create({
     },
     unselectedCard: {
         borderColor: '#FFF',
+    },
+    tooltip: {
+        backgroundColor: '#808080',
+        justifyContent: 'space-between',
     }
-
 
 });
 export default styles;

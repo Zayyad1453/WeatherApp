@@ -17,7 +17,7 @@ class WeatherDeck extends React.Component {
         const { selectedCard, deck, iconsRef, firstIndex } = this.props;
         // console.log('WEATHER_REPORT', CONTANTS.WEATHER_REPORT,)
         const windowWidth = Dimensions.get('window').width;
-        console.log(selectedCard);
+        // console.log(selectedCard);
         return (
             <View>
                 {

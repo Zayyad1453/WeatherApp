@@ -50,7 +50,7 @@ const SearchCard = (props) => {
         <GoogleAutoComplete
             apiKey={CONSTANTS.GOOGLE_PLACES_API_KEY}
             debounce={500}
-            minLength={3}
+            minLength={4}
             queryTypes={"(cities)"}
         >
             {({ handleTextChange, locationResults, fetchDetails, isSearching, clearSearch, inputValue }) => (

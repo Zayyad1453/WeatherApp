@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { ImageBackground, Animated, ActivityIndicator, Modal, Linking, Platform, View, KeyboardAvoidingView, Dimensions, ScrollView, AppState } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styles from '../../assets/style/styles';
 import { connect } from 'react-redux';
 import * as actions from '../store/'

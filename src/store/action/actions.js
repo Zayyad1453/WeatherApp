@@ -28,6 +28,59 @@ const setLocation = (data) => {
     }
 }
 
+const parseLocation = (resp) => {
+    return (dispatch) => {
+        let country;
+        let city;
+        for (var i = 0; i < resp.length; i++) {
+
+            if (resp[i].types[0] == "country") {
+                country = resp[i].short_name;
+            }
+            if (resp[i].types.length == 2) {
+                if (resp[i].types[0] == "political") {
+                    country = resp[i].short_name;
+                }
+            }
+            if (resp[i].types[0] == "locality") {
+                city = resp[i].short_name;
+            }
+            if (resp[i].types.length == 2) {
+                if (resp[i].types[0] == "political") {
+                    city = resp[i].short_name;
+                }
+            }
+        }
+
+        let add = [city, country].join(", ");
+        return add;
+    }
+}
+
+const getLocation = (lat, lng) => {
+    return (dispatch) => {
+        const url = `${CONSTANTS.GEOCODE_URL}${lat},${lng}&key=${CONSTANTS.GOOGLE_PLACES_API_KEY}`;
+        console.log('loc url', url);
+        axios.get(url)
+            .then(response => {
+                console.log('response', response)
+                if (response.status === 200) {
+                    const resp = cloneDeep(response.data);
+                    let address = dispatch(parseLocation(resp.results[0].address_components))
+                    dispatch(setLocation(address));
+                } else {
+                    console.log('response', response.status);
+                    dispatch(setLocation('Address not available'));
+                }
+            })
+            .catch(error => {
+                console.log('error', error);
+                dispatch(setLocation('Error fetching address name'));
+            });
+    }
+}
+
+
 const weatherCall = (dates, currentState, latitude, longitude) => {
     return (dispatch) => {
         const limit = dates.length;
@@ -51,7 +104,7 @@ const weatherCall = (dates, currentState, latitude, longitude) => {
                         if (currentState.length === limit) {
                             // console.log('currentState', currentState);
                             currentState = HELPERS.addDates(currentState);
-                            dispatch(setLocation(response.data.timezone));
+                            // console.log(response);                            
                             dispatch(setWeatherStatus('success', false, currentState));
                         }
 
@@ -88,5 +141,6 @@ export const getWeather = (data) => {
         }
 
         dispatch(weatherCall(HELPERS.DATES, weatherState, latitude, longitude));
+        dispatch(getLocation(latitude, longitude));
     }
 };

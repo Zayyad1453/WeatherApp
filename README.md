@@ -1,12 +1,23 @@
-# Technical assignment mobile engineer
-Make an application that allows the user to view the observed (in the past 30 days) or forecasted (in the future) daily weather conditions for a given location using your preferred weather API.
+# Technical assignment mobile engineer - Zayyad Tagwai
+This is a simple weather application built with React Native that that allows the user to view  general weather data for the past week and the upcoming week.
 
-You are free to use the frameworks and tools you prefer, however we strongly suggest you keep the hard skills of the job offer in mind.
 
-**Minimal requirements**
-* Use React Native
 
-**Timing**
+#### How to Install ####
+***IOS And Android (Using Expo)***
+- Install Expo
 
-You have 3 weeks to accomplish the assignment. You decide yourself how much time and effort you invest in it, but one of our colleagues tends to say: "Make sure it is good" ;-). 
-Please send us (jobs@madewithlove.be) an email when you are ready with the assignment. Please mention your name, Github username and a link to what we need to review.
+***Android***
+The app can be installed in multiple ways
+- The APK can be installed directly via <<EXPO LINK>>
+- A drive link to the APK is temporarily available <<GOOGLE DRIVE LINK>>
+
+
+
+#### Features ####
+- Current location data
+- Ability to view weather history and forecast for up to a week
+- View temperatures in Celcius or the wrong way
+- View weather conditions of other location
+- View hourly breakdown
+
