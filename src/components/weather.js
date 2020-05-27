@@ -5,12 +5,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import WeatherDeck from './weatherDeck';
 import SearchCard from './searchCard';
 import * as HELPERS from '../utils/helpers';
+import HourlyModal from '../components/hourlyModal'
 import {
     MenuProvider, Menu,
     MenuOptions,
     MenuOption,
     MenuTrigger,
 } from 'react-native-popup-menu';
+// import Modal, { ModalContent } from 'react-native-modals';
 
 
 class Weather extends React.Component {
@@ -18,9 +20,7 @@ class Weather extends React.Component {
     state = {
         units: 'C',
         showMore: false,
-        condition: '',
-        value: '',
-        icon: '',
+        hourlyData: '',
     }
 
     toggleUnits = () => {
@@ -36,9 +36,16 @@ class Weather extends React.Component {
         })
     }
 
+    showHourly = (hourlyData) => {
+        this.setState({
+            showMore: true,
+            hourlyData: hourlyData,
+        })
+    }
+
     render() {
         const { props } = this;
-        const { units, showMore, condition, value, icon } = this.state;
+        const { units, showMore, hourlyData } = this.state;
 
         let fahrenheit;
         let fahrenheitLow;
@@ -221,7 +228,15 @@ class Weather extends React.Component {
                         />
                     </View>
                 </View>
+
+                <HourlyModal
+                    showMore={showMore}
+                    hourlyData={hourlyData}
+                />
             </MenuProvider>
+
+
+
         );
     }
 

@@ -2,12 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Animated, Easing } from 'react-native';
 import styles from '../../assets/style/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as CONSTANTS from '../utils/constants';
 
 const WeatherCard = (props) => {
     // console.log(props)
     let iconName = props.iconsRef[props.item.icon].icon;
-
 
     let scaleValue = new Animated.Value(0); // declare an animated value
     const cardScale = scaleValue.interpolate({
@@ -26,6 +24,10 @@ const WeatherCard = (props) => {
             easing: Easing.linear,
             useNativeDriver: true
         }).start();
+
+        if (isSelected){
+            alert('selected');
+        }
     }
 
     // console.log (new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),new Date(props.item.date).setHours(0, 0, 0, 0) , new Date().setHours(0, 0, 0, 0));
@@ -43,7 +45,7 @@ const WeatherCard = (props) => {
             delayPressIn={100} delayPressOut={100} delayLongPress={100}
             onPressIn={() => {
                 // alert("");
-                animate();
+                animate(isSelected);
             }}
             onPressOut={() => {
                 props.action(props.item, props.index); 
@@ -57,7 +59,6 @@ const WeatherCard = (props) => {
                     {dateText}
 
                 </Text>)}
-
                 <MaterialCommunityIcons style={styles.center} size={20} name={iconName} color={'#fff'} />
                 <Text style={[styles.subText, styles.textBold, styles.center, styles.tempText]}>{props.item.temperatureHigh}˚C</Text>
             </View>

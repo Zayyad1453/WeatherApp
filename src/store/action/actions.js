@@ -60,10 +60,10 @@ const parseLocation = (resp) => {
 const getLocation = (lat, lng) => {
     return (dispatch) => {
         const url = `${CONSTANTS.GEOCODE_URL}${lat},${lng}&key=${CONSTANTS.GOOGLE_PLACES_API_KEY}`;
-        console.log('loc url', url);
+        // console.log('loc url', url);
         axios.get(url)
             .then(response => {
-                console.log('response', response)
+                // console.log('response', response)
                 if (response.status === 200) {
                     const resp = cloneDeep(response.data);
                     let address = dispatch(parseLocation(resp.results[0].address_components))
