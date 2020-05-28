@@ -7,17 +7,23 @@ import styles from '../../assets/style/styles';
 class WeatherDeck extends React.Component {
 
     scrollToCard = (item, index) => {
-        // console.log('index', index)
-        // console.log('currentIndex',this.flatList.currentIndex)
         this.flatList.snapToItem(index);
         this.props.selectCard(item);
     }
 
     render() {
-        const { selectedCard, deck, iconsRef, firstIndex } = this.props;
-        // console.log('WEATHER_REPORT', CONTANTS.WEATHER_REPORT,)
+        const {
+            selectedCard,
+            deck,
+            iconsRef,
+            firstIndex,
+            showHourly,
+            units,
+            toggleUnits 
+        } = this.props;
+        
         const windowWidth = Dimensions.get('window').width;
-        // console.log(selectedCard);
+        
         return (
             <View>
                 {
@@ -37,6 +43,9 @@ class WeatherDeck extends React.Component {
                                 index={index}
                                 iconsRef={iconsRef}
                                 selectedCard={selectedCard}
+                                showHourly={showHourly}
+                                toggleUnits={toggleUnits}
+                                units={units}
                             />
                         }
                         inactiveSlideScale={0.8}

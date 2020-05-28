@@ -28,6 +28,13 @@ const setLocation = (data) => {
     }
 }
 
+const setHourlyStatus = (data) => {
+    return {
+        type: actionTypes.HOURLY_STATUS,
+        data,
+    }
+}
+
 const parseLocation = (resp) => {
     return (dispatch) => {
         let country;
@@ -81,13 +88,12 @@ const getLocation = (lat, lng) => {
 }
 
 
-const weatherCall = (dates, currentState, latitude, longitude) => {
+const weatherCall = (dates, currentState, latitude, longitude, hourlyState) => {
     return (dispatch) => {
         const limit = dates.length;
         for (let i = 0; i < limit; i++) {
-            // console.log('weatherCall', i, dates.length, currentState);
             let queryDate = `${dates[i].getFullYear()}-${dates[i].getMonth() + 1 < 10 ? "0" + (dates[i].getMonth() + 1) : dates[i].getMonth() + 1}-${dates[i].getDate() < 10 ? "0" + dates[i].getDate() : dates[i].getDate()}`;
-            const url = `${CONSTANTS.DARKSKY_BASE_URL}/${CONSTANTS.DARKSKY_API_KEY}/${latitude},${longitude},${queryDate}T00:00:00?exclude=currently,minutely,hourly,flags,alerts&units=si`;
+            const url = `${CONSTANTS.DARKSKY_BASE_URL}/${CONSTANTS.DARKSKY_API_KEY}/${latitude},${longitude},${queryDate}T00:00:00?exclude=currently,minutely,flags,alerts&units=si`;
 
             if (Platform.OS !== 'android' && Platform.OS !== 'ios') {
                 url = CONSTANTS.PROXY + url
@@ -99,12 +105,16 @@ const weatherCall = (dates, currentState, latitude, longitude) => {
                     // console.log('response', response.data.daily)
                     if (response.status === 200) {
                         const resp = cloneDeep(response.data.daily.data[0]);
+                        const respHourly = cloneDeep(response.data.hourly);
                         // console.log('weatherCall', i, currentState.length, limit);
                         currentState.push(resp);
+                        hourlyState.push(respHourly);
                         if (currentState.length === limit) {
                             // console.log('currentState', currentState);
+                            // console.log('hourlyState', hourlyState);
                             currentState = HELPERS.addDates(currentState);
-                            // console.log(response);                            
+                            // console.log(response);       
+                            dispatch(setHourlyStatus(hourlyState))                     
                             dispatch(setWeatherStatus('success', false, currentState));
                         }
 
@@ -130,6 +140,7 @@ export const getWeather = (data) => {
         let weatherState = [];
         let latitude;
         let longitude;
+        let hourlyState = [];
 
         if (data.coords) {
             latitude = data.coords.latitude;
@@ -140,7 +151,7 @@ export const getWeather = (data) => {
             longitude = data.geometry.location.lng;
         }
 
-        dispatch(weatherCall(HELPERS.DATES, weatherState, latitude, longitude));
+        dispatch(weatherCall(HELPERS.DATES, weatherState, latitude, longitude, hourlyState));
         dispatch(getLocation(latitude, longitude));
     }
 };

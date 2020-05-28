@@ -64,7 +64,7 @@ function buildArray(arr) {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     for (let i = 0; i < arr.length; i++) {
-        console.log(datesArray[i]);
+        // console.log(datesArray[i]);
         arr[i].date = datesArray[i];
         // if (i === 31) {
         //     console.log(datesArray[i]);
@@ -120,10 +120,10 @@ export function addDates(arr) {
 
         let time = arr[i].time * 1000;
         let date = new Date(time);
-        if (i === 31) {
-            console.log(new Date(arr[i].time));
-            console.log(new Date());
-        }
+        // if (i === 31) {
+        //     console.log(new Date(arr[i].time));
+        //     console.log(new Date());
+        // }
         arr[i].time = time;
         arr[i].day = days[date.getDay()];
         arr[i].date = date.getDate();

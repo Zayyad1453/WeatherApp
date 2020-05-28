@@ -158,9 +158,17 @@ class Index extends React.Component {
     };
 
     render() {
-        const { loading, weatherReport, location } = this.props;
+        const { loading, weatherReport, location, hourlyReport } = this.props;
         const { selectedCard, firstIndex, bg, fade, iconsRef, showLocationError } = this.state;
         // console.log('reducer', loading, weatherReport, location)
+
+        let hourlyData;
+        if (hourlyReport && selectedCard) {
+            hourlyReport.forEach(item => {
+                hourlyData = hourlyReport.find(x => new Date(x.data[0].time * 1000).setHours(0, 0, 0, 0) === new Date(selectedCard.time).setHours(0, 0, 0, 0));
+            })
+        }
+
         return (
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
@@ -181,6 +189,7 @@ class Index extends React.Component {
                                     <Weather
                                         selectCard={this.selectCard}
                                         selectedCard={selectedCard}
+                                        hourlyData={hourlyData}
                                         loading={loading}
                                         location={location}
                                         selectLocation={this.selectLocation}
@@ -188,6 +197,7 @@ class Index extends React.Component {
                                         deck={weatherReport}
                                         iconsRef={iconsRef}
                                         firstIndex={firstIndex}
+                                        bg={bg}
                                     />
                             }
                         </ImageBackground>
@@ -201,10 +211,11 @@ class Index extends React.Component {
 
 
 const mapStateToProps = (weatherReducer) => {
-    const { loading, weatherReport, location } = weatherReducer;
+    const { loading, weatherReport, location, hourlyReport } = weatherReducer;
     return {
         loading, weatherReport,
         location,
+        hourlyReport,
     }
 };
 

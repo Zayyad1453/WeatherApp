@@ -25,20 +25,23 @@ const WeatherCard = (props) => {
             useNativeDriver: true
         }).start();
 
-        if (isSelected){
-            alert('selected');
+        if (isSelected) {
+            props.showHourly();
         }
     }
 
     // console.log (new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),new Date(props.item.date).setHours(0, 0, 0, 0) , new Date().setHours(0, 0, 0, 0));
-    let isToday =  new Date(props.item.time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
+    let isToday = new Date(props.item.time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
     let isSelected = (props.selectedCard.time === props.item.time)
 
     let date = props.item.date.toString();
-    const dateText = props.item && isToday ? `Today` :  date.substr(-1) === '1' ? `${date}st` : date.substr(-1) === '2' ? `${date}nd` : date.substr(-1) === '3' ? `${date}rd` : `${date}th`;
+    const dateText = props.item && isToday ? `Today` : date.substr(-1) === '1' ? `${date}st` : date.substr(-1) === '2' ? `${date}nd` : date.substr(-1) === '3' ? `${date}rd` : `${date}th`;
     // const dateText = new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) ? `Today` :  date.substr(-1) === '1' ? ` st` : date.substr(-1) === '2' ? ` nd` : date.substr(-1) === '3' ? ` rd` : ` th`;
     // const dateText = false ? 'this' : true ? 'that' : 'those';
     // const textObj = <Text>{dateText}</Text>
+
+    let fahrenheit = ((props.item.temperatureHigh * 9 / 5) + 32).toFixed(1);
+
     return (
         <AnimatedTouchable
             style={transformStyle}
@@ -48,11 +51,11 @@ const WeatherCard = (props) => {
                 animate(isSelected);
             }}
             onPressOut={() => {
-                props.action(props.item, props.index); 
+                props.action(props.item, props.index);
             }}
         >
             <View
-                style={[styles.weatherCard, styles.viewShadow, isSelected ? styles.selectedCard : styles.unselectedCard, {opacity: 1}]}
+                style={[styles.weatherCard, styles.viewShadow, isSelected ? styles.selectedCard : styles.unselectedCard, { opacity: 1 }]}
             >
                 {!!dateText && (<Text style={[styles.subText, styles.center, styles.tempText]}>
 
@@ -60,7 +63,12 @@ const WeatherCard = (props) => {
 
                 </Text>)}
                 <MaterialCommunityIcons style={styles.center} size={20} name={iconName} color={'#fff'} />
-                <Text style={[styles.subText, styles.textBold, styles.center, styles.tempText]}>{props.item.temperatureHigh}˚C</Text>
+                <Text style={[styles.subText, styles.textBold, styles.center, styles.tempText]}>
+                    {props.units === "C" ?
+                        (`${props.item.temperatureHigh}˚C`) :
+                        (`${fahrenheit}˚F`)
+                    }
+                </Text>
             </View>
         </AnimatedTouchable>
     );

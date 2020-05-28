@@ -3,6 +3,7 @@ import * as actionTypes from '../action/actionTypes';
 const INITIAL_STATE = {
     loading: true,
     weatherReport: [],
+    hourlyReport: [],
     location: ''
 };
 
@@ -19,6 +20,11 @@ const weatherReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 weatherReport: data,
                 loading: loading,
+            }
+        case actionTypes.HOURLY_STATUS:
+            return {
+                ...state,
+                hourlyReport: data,
             }
         case actionTypes.LOCATION_STATUS:
             return {

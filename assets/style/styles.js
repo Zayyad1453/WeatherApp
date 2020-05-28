@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
     megaText: {
         fontSize: 90,
     },
+    tempText: {
+        color: '#ddd'
+    },
     textLight: {
         fontWeight: '300',
     },
@@ -46,7 +49,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     viewShadow: {
-        shadowColor: '#000',
+        shadowColor: '#111',
         shadowOffset: {
             width: 3,
             height: 3,
@@ -98,9 +101,6 @@ const styles = StyleSheet.create({
     weatherInfoBarItem: {
         flexDirection: 'row',
     },
-    tempText: {
-        color: '#ddd'
-    },
     bodyContainer: {
         // flex: 1,
         // alignItems: '',
@@ -131,6 +131,34 @@ const styles = StyleSheet.create({
     tooltip: {
         backgroundColor: '#808080',
         justifyContent: 'space-between',
+    },
+    hourlyContainer: {
+        borderRadius: 5,
+        opacity: 0.9,
+    },
+    hourlyHeader: {
+        // flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        zIndex: 90,
+        elevation: 3,
+
+        
+    },
+    hourlyBody: {
+        padding: 30,
+    },
+    hourlyItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        borderRadius: 3,
+        backgroundColor: 'rgba(0,0,0,0.9)',
+        paddingHorizontal: 5,
+        paddingVertical: 10,
+
     }
 
 });
