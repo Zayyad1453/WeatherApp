@@ -35,7 +35,7 @@ The app can be installed on Android in multiple ways
 
 - The expo link to the project is available [here](https://expo.io/@zayyad1453/weatherapp).
 
-- A Google drive link to the APK is temporarily available [here](https://drive.google.com/open?id=1HbbTllh_a2t5W6qvfcVMQdxUCAaZ3Muy).
+- A Google drive link to the APK is temporarily available [here](https://drive.google.com/open?id=18su_SnLd6ERA1DyYTliy18HKUQibvrMQ`).
 
 
 
@@ -53,6 +53,6 @@ The app can be installed on Android in multiple ways
 
 - View weather conditions of other locations - using the search bar at the top
 
-- View hourly breakdown by tapping on the card of the current day in view
+- View hourly breakdown by tapping on the card of the current day
 
 - If you have any confusion, just give it a tap ... or drop me a message

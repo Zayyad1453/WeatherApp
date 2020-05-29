@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4bff89c7-f19c-4f3a-844e-44d334a3f780" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/hourlyModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hourlyModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/weather.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/weather.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/weatherCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/weatherCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/weatherDeck.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/weatherDeck.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/searchCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/searchCard.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

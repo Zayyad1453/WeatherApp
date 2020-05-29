@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Modal, View, TouchableHighlight, Text, Dimensions, ImageBackground } from 'react-native';
+import { Modal, View, TouchableHighlight, Text, Dimensions, ImageBackground, ScrollView } from 'react-native';
 import styles from '../../assets/style/styles';
 import Carousel from 'react-native-snap-carousel';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -16,11 +16,19 @@ const HourlyItem = props => {
 
     return (
         <View style={styles.hourlyItem}>
-            <Text style={styles.tempText}>
-                {time} &nbsp;&nbsp;
-                {props.item.summary}&nbsp;
-                <MaterialCommunityIcons size={20} name={iconName} color={'#fff'} />
-            </Text>
+            <View>
+                <Text style={styles.tempText}>
+                    {time} &nbsp;&nbsp;
+                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+                    <ScrollView horizontal={true} style={{ alignSelf: 'stretch' }}>
+                        <Text style={styles.tempText}>
+                            {props.item.summary}&nbsp;
+                    </Text>
+                    </ScrollView>
+                    <MaterialCommunityIcons size={20} name={iconName} color={'#fff'} />
+                </View>
+            </View>
             <TouchableHighlight onPress={() => props.toggleUnits(props.item.temperature)}>
                 <Text style={styles.tempText}>
                     {props.units === "C" ?
@@ -70,14 +78,16 @@ const HourlyModal = props => {
                         <View style={styles.hourlyHeader}>
                             <View>
                                 <View style={{ flexDirection: 'row' }}>
-                                    {!!weatherCondition && <Text style={[styles.majorText, styles.textBold,]}>
+                                    {!!weatherCondition && <Text style={[styles.hourlyHeaderText, styles.textBold,]}>
                                         {weatherCondition}
                                     </Text>}
                                     <MaterialCommunityIcons size={30} name={iconName} color={'#000'} />
                                 </View>
-                                <Text style={[styles.subText, styles.defaultTextBlack]}>
-                                    {props.hourlyData.summary}
-                                </Text>
+                                <ScrollView horizontal={true}>
+                                    <Text style={[styles.subText, styles.defaultTextBlack, {}]}>
+                                        {props.hourlyData.summary}
+                                    </Text>
+                                </ScrollView>
                             </View>
 
                             <TouchableHighlight
@@ -92,7 +102,7 @@ const HourlyModal = props => {
                         vertical={true}
                         enableSnap={true}
                         sliderHeight={300}
-                        itemHeight={50}
+                        itemHeight={60}
                         containerCustomStyle={styles.hourlyBody}
                         renderItem={({ item, index }) =>
                             <HourlyItem

@@ -145,8 +145,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         zIndex: 90,
         elevation: 3,
-
-        
+    },
+    hourlyHeaderText: {
+        fontSize: 30,
     },
     hourlyBody: {
         padding: 30,

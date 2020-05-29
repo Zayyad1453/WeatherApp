@@ -38,7 +38,11 @@ const SearchTextInput = React.forwardRef((props, ref) => (
 const ClearButton = (props) => {
     return (
         <TouchableHighlight
-            onPress={(e) => { props.clearSearch(e); ref.current.clear() }}>
+            onPress={(e) => { 
+                props.clearSearch(e); 
+                ref.current.clear(); 
+                ref.current.focus();
+                 }}>
             <MaterialCommunityIcons size={30} name={'close'} color={'#555'} />
         </TouchableHighlight>
     )
