@@ -35,7 +35,7 @@ The app can be installed on Android in multiple ways
 
 - The expo link to the project is available [here](https://expo.io/@zayyad1453/weatherapp).
 
-- A Google drive link to the APK is temporarily available [here](https://drive.google.com/open?id=18su_SnLd6ERA1DyYTliy18HKUQibvrMQ`).
+- A Google drive link to the APK is temporarily available [here](https://drive.google.com/open?id=18su_SnLd6ERA1DyYTliy18HKUQibvrMQ).
 
 
 
