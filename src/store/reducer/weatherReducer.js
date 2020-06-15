@@ -1,32 +1,38 @@
-import { combineReducers } from 'redux';
 import * as actionTypes from '../action/actionTypes';
 
 const INITIAL_STATE = {
-    loading: false,
+    loading: true,
     weatherReport: [],
+    hourlyReport: [],
+    location: ''
 };
 
 const weatherReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type) {
-        
+    const { type, outcome, loading, data } = action;
+    switch (type) {
         case actionTypes.LOADING_WEATHER:
-            // console.log('here3');
             return {
                 ...state,
-                loading: true,
+                loading: loading,
             }
         case actionTypes.WEATHER_STATUS:
             return {
                 ...state,
-                weatherReport: action.payload.data,
-                loading: false,
+                weatherReport: data,
+                loading: loading,
+            }
+        case actionTypes.HOURLY_STATUS:
+            return {
+                ...state,
+                hourlyReport: data,
+            }
+        case actionTypes.LOCATION_STATUS:
+            return {
+                ...state,
+                location: data,
             }
         default:
             return state
     }
 };
 export default weatherReducer;
-
-// export default combineReducers({
-//     weather: weatherReducer,
-// });

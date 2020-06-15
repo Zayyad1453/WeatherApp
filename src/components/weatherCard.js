@@ -2,12 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Animated, Easing } from 'react-native';
 import styles from '../../assets/style/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as CONSTANTS from '../utils/constants';
 
 const WeatherCard = (props) => {
     // console.log(props)
-    let iconName = CONSTANTS.ICONS_REF.find(item => item.condition === props.item.weatherCondition);
-
+    let iconName = props.iconsRef[props.item.icon].icon;
 
     let scaleValue = new Animated.Value(0); // declare an animated value
     const cardScale = scaleValue.interpolate({
@@ -26,39 +24,51 @@ const WeatherCard = (props) => {
             easing: Easing.linear,
             useNativeDriver: true
         }).start();
+
+        if (isSelected) {
+            props.showHourly();
+        }
     }
 
     // console.log (new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),new Date(props.item.date).setHours(0, 0, 0, 0) , new Date().setHours(0, 0, 0, 0));
-    let isToday =  props.item && new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
+    let isToday = new Date(props.item.time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
+    let isSelected = (props.selectedCard.time === props.item.time)
+
+    let date = props.item.date.toString();
+    const dateText = props.item && isToday ? `Today` : date.substr(-1) === '1' ? `${date}st` : date.substr(-1) === '2' ? `${date}nd` : date.substr(-1) === '3' ? `${date}rd` : `${date}th`;
+    // const dateText = new Date(props.item.date).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) ? `Today` :  date.substr(-1) === '1' ? ` st` : date.substr(-1) === '2' ? ` nd` : date.substr(-1) === '3' ? ` rd` : ` th`;
+    // const dateText = false ? 'this' : true ? 'that' : 'those';
+    // const textObj = <Text>{dateText}</Text>
+
+    let fahrenheit = ((props.item.temperatureHigh * 9 / 5) + 32).toFixed(1);
+
     return (
         <AnimatedTouchable
-            style={[transformStyle, isToday ? styles.selectedCard : styles.unselectedCard]}
-            delayPressIn={100} delayPressOut={5} delayLongPress={5}
+            style={transformStyle}
+            delayPressIn={100} delayPressOut={100} delayLongPress={100}
             onPressIn={() => {
                 // alert("");
-                animate();
+                animate(isSelected);
             }}
             onPressOut={() => {
                 props.action(props.item, props.index);
             }}
         >
-            <View 
-                style={styles.weatherCard}
+            <View
+                style={[styles.weatherCard, styles.viewShadow, isSelected ? styles.selectedCard : styles.unselectedCard, { opacity: 1 }]}
             >
-                <Text style={[styles.subText, styles.center, styles.tempText]}>
+                {!!dateText && (<Text style={[styles.subText, styles.center, styles.tempText]}>
 
-                    {
-                       isToday ?
-                        'Today ':
-                            // props.item.day.substr(0, 3)
-                            `${props.item.date.getDate()} ${props.item.date.getMonth() + 1} `
-                    } 
+                    {dateText}
 
-                    {/* `${props.item.day.substr(0, 3)}, ${props.item.date.getDate()} ${props.item.month.substr(0, 3)}, ${props.item.date.getFullYear()} ` */}
+                </Text>)}
+                <MaterialCommunityIcons style={styles.center} size={20} name={iconName} color={'#fff'} />
+                <Text style={[styles.subText, styles.textBold, styles.center, styles.tempText]}>
+                    {props.units === "C" ?
+                        (`${props.item.temperatureHigh}˚C`) :
+                        (`${fahrenheit}˚F`)
+                    }
                 </Text>
-                {/* <Text>{props.item.index}</Text>  */}
-                <MaterialCommunityIcons style={styles.center} size={20} name={iconName ? iconName.icon : null} color={'#fff'} />
-                <Text style={[styles.subText, styles.textBold, styles.center, styles.tempText]}>{props.item.temperature}˚C</Text>
             </View>
         </AnimatedTouchable>
     );

@@ -1,57 +1,59 @@
 import React from 'react';
-import {
-    FlatList, Dimensions, TouchableOpacity,
-    Animated, Easing
-} from 'react-native';
+import { View, Dimensions } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 import WeatherCard from './weatherCard';
 import styles from '../../assets/style/styles';
 
 class WeatherDeck extends React.Component {
-    // state = {        
-    //     data: CONTANTS.WEATHER_REPORT,
-    // }
 
     scrollToCard = (item, index) => {
-        
-        alert(index, typeof index);
-        // let myIndex = 12;
-        this.flatList.scrollToItem({
-            item,
-            animated: true,
-          });
-          this.props.selectCard(item);
+        this.flatList.snapToItem(index);
+        this.props.selectCard(item);
     }
-    
-    render() {
-        const { selectedCard, deck } = this.props;
-        // console.log('WEATHER_REPORT', CONTANTS.WEATHER_REPORT,)
-        // let flatListRef = React.createRef();
 
-        // console.log(Dimensions.get('window'));
+    render() {
+        const {
+            selectedCard,
+            deck,
+            iconsRef,
+            firstIndex,
+            showHourly,
+            units,
+            toggleUnits 
+        } = this.props;
+        
+        const windowWidth = Dimensions.get('window').width;
+        
         return (
-            <FlatList
-                // Do something when animation ended
-                // onMomentumScrollEnd={(e) => this.onScrollEnd(e)}
-                ref={ (ref) => this.flatList = ref}
-                horizontal={true}
-                showsHorizontalScrollIndicator={true}
-                persistentScrollbar={true}
-                data={deck}
-                keyExtractor={(item) => item.index.toString()}            
-                getItemLayout={(data, index) => (
-                    // Max 5 items visibles at once 
-                    // { length: Dimensions.get('window').width / 5, offset: Dimensions.get('window').width / 5 * index, index }
-                    { length: Dimensions.get('window').height / 6, offset: Dimensions.get('window').height / 6 * index, index }
-                )}
-                initialScrollIndex={0}
-                snapToAlignment={'center'}
-                
-                style={{flex: 1}}                
-                contentContainerStyle={styles.weatherCardContainer}
-                renderItem={({ item, index }) =>
-                    <WeatherCard action={this.scrollToCard} item={item} index={index} />
+            <View>
+                {
+                    !!selectedCard &&
+                    <Carousel
+                        ref={(ref) => this.flatList = ref}
+                        data={deck}
+                        sliderWidth={windowWidth}
+                        enableSnap={true}
+                        itemWidth={windowWidth / 4.7}
+                        containerCustomStyle={styles.weatherCardContainer}
+                        // contentContainerCustomStyle={{ backgroundColor: 'green' }}
+                        renderItem={({ item, index }) =>
+                            <WeatherCard
+                                action={this.scrollToCard}
+                                item={item}
+                                index={index}
+                                iconsRef={iconsRef}
+                                selectedCard={selectedCard}
+                                showHourly={showHourly}
+                                toggleUnits={toggleUnits}
+                                units={units}
+                            />
+                        }
+                        inactiveSlideScale={0.8}
+                        firstItem={firstIndex}
+                        initialNumToRender={deck.length}
+                    />
                 }
-            />
+            </View>
         );
     }
 
