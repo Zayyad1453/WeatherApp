@@ -1,6 +1,6 @@
 
 
-# Technical assignment mobile engineer - Zayyad Tagwai
+# Weather App
 
 This is a simple weather application built with React Native that that allows the user to view general weather data for the past week and the upcoming week.
   
