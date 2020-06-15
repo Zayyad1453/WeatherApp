@@ -11,7 +11,6 @@ import * as Location from 'expo-location'
 import * as HELPERS from '../utils/helpers';
 import ErrorModal from '../components/errorModal';
 
-
 class Index extends React.Component {
     state = {
         appState: AppState.currentState,
