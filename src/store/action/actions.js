@@ -1,9 +1,9 @@
 import { cloneDeep } from 'lodash';
 import * as actionTypes from './actionTypes';
-import * as CONSTANTS from '../../utils/constants';
 import * as HELPERS from '../../utils/helpers';
 import axios from 'react-native-axios';
 import { PLatfrom, Platform } from 'react-native'
+import { PROXY, DARKSKY_BASE_URL, DARKSKY_API_KEY, GEOCODE_URL, GOOGLE_PLACES_API_KEY } from 'react-native-dotenv';
 
 const loadingWeatherReport = (loading) => {
     return {
@@ -66,7 +66,7 @@ const parseLocation = (resp) => {
 
 const getLocation = (lat, lng) => {
     return (dispatch) => {
-        const url = `${CONSTANTS.GEOCODE_URL}${lat},${lng}&key=${CONSTANTS.GOOGLE_PLACES_API_KEY}`;
+        const url = `${GEOCODE_URL}${lat},${lng}&key=${GOOGLE_PLACES_API_KEY}`;
         // console.log('loc url', url);
         axios.get(url)
             .then(response => {
@@ -93,10 +93,10 @@ const weatherCall = (dates, currentState, latitude, longitude, hourlyState) => {
         const limit = dates.length;
         for (let i = 0; i < limit; i++) {
             let queryDate = `${dates[i].getFullYear()}-${dates[i].getMonth() + 1 < 10 ? "0" + (dates[i].getMonth() + 1) : dates[i].getMonth() + 1}-${dates[i].getDate() < 10 ? "0" + dates[i].getDate() : dates[i].getDate()}`;
-            const url = `${CONSTANTS.DARKSKY_BASE_URL}/${CONSTANTS.DARKSKY_API_KEY}/${latitude},${longitude},${queryDate}T00:00:00?exclude=currently,minutely,flags,alerts&units=si`;
+            const url = `${DARKSKY_BASE_URL}/${DARKSKY_API_KEY}/${latitude},${longitude},${queryDate}T00:00:00?exclude=currently,minutely,flags,alerts&units=si`;
 
             if (Platform.OS !== 'android' && Platform.OS !== 'ios') {
-                url = CONSTANTS.PROXY + url
+                url = PROXY + url
             }
 
             // console.log('url', url);

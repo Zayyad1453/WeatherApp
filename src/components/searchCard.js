@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableHighlight, TextInput, ActivityIndicator } from 'react-native';
 import styles from '../../assets/style/styles';
-import * as CONSTANTS from '../utils/constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GoogleAutoComplete } from 'react-native-google-autocomplete';
+import { GOOGLE_PLACES_API_KEY } from 'react-native-dotenv';
 
 const selectLocation = async (placeId, fetchDetails, fetchWeather) => {
     const resp = await fetchDetails(placeId)
@@ -38,11 +38,11 @@ const SearchTextInput = React.forwardRef((props, ref) => (
 const ClearButton = (props) => {
     return (
         <TouchableHighlight
-            onPress={(e) => { 
-                props.clearSearch(e); 
-                ref.current.clear(); 
+            onPress={(e) => {
+                props.clearSearch(e);
+                ref.current.clear();
                 ref.current.focus();
-                 }}>
+            }}>
             <MaterialCommunityIcons size={30} name={'close'} color={'#555'} />
         </TouchableHighlight>
     )
@@ -50,9 +50,10 @@ const ClearButton = (props) => {
 
 const ref = React.createRef();
 const SearchCard = (props) => {
+
     return (
         <GoogleAutoComplete
-            apiKey={CONSTANTS.GOOGLE_PLACES_API_KEY}
+            apiKey={GOOGLE_PLACES_API_KEY}
             debounce={500}
             minLength={4}
             queryTypes={"(cities)"}
