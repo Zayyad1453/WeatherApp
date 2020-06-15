@@ -29,13 +29,8 @@ For Android, scan the QR code from the in app QR code scanner
 
   
 
-***Android***
 
-The app can be installed on Android in multiple ways
 
-- The expo link to the project is available [here](https://expo.io/@zayyad1453/weatherapp).
-
-- A Google drive link to the APK is temporarily available [here](https://drive.google.com/open?id=18su_SnLd6ERA1DyYTliy18HKUQibvrMQ).
 
 
 
@@ -49,7 +44,7 @@ The app can be installed on Android in multiple ways
 
 - Ability to view weather history and forecast for up to a week - using the cards at the bottom of the screen
 
-- View temperatures in Celcius or the wrong way - by tapping on the temperature
+- View temperatures in Celcius or Fahrenheit - by tapping on the temperature
 
 - View weather conditions of other locations - using the search bar at the top
 
